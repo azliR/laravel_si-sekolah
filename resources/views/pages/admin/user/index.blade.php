@@ -103,7 +103,13 @@
                                                        class="form-control @error('email') is-invalid @enderror"
                                                        placeholder="{{ __('Email User') }}" value="{{ old('email') }}">
                                             </div>
-                                            <input name="password" type="password" value="password123" hidden>
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="password" id="password" name="password"
+                                                       class="form-control @error('password') is-invalid @enderror"
+                                                       value="password123">
+                                                Password default adalah password123
+                                            </div>
                                             <div class="form-group">
                                                 <label for="roles">Roles</label>
                                                 <select id="roles" name="roles"
@@ -158,7 +164,17 @@
             $('#roles').change(function () {
                 var kel = $('#roles option:selected').val();
                 if (kel == "guru") {
-                    $("#noId").html('<label for="nip">NIP guru</label><input id="nip" type="text" onkeypress="return inputAngka(event)" placeholder="NIP Guru" class="form-control" name="nip" autocomplete="off">');
+                    $("#noId").html(`
+                    <div class="form-group">
+                        <label for="nip">NIP</label>
+                        <select id="nip" name="nip" class="select2 form-control @error('nip') is-invalid @enderror">
+                            <option value="">-- Pilih Guru --</option>
+                            @foreach ($guru as $data )
+                    <option value="{{ $data->nip }}">{{ $data->nama }} - {{ $data->nip }}</option>
+                            @endforeach
+                    </select>
+                </div>
+`);
                 } else if (kel == "siswa") {
                     $("#noId").html(`<label for="nis">NIS Siswa</label><input id="nis" type="text" placeholder="NIS Siswa" class="form-control" name="nis" autocomplete="off">`);
                 } else if (kel == "admin") {

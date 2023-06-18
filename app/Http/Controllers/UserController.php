@@ -19,18 +19,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::OrderBy('roles', 'asc')->get();
-        return view('pages.admin.user.index', compact('user'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        abort(404);
+        $user = User::orderBy('roles', 'asc')->get();
+        // filter guru by user_id is null
+        $guru = Guru::where('user_id', null)->get();
+        return view('pages.admin.user.index', compact('user', 'guru'));
     }
 
     /**
@@ -69,7 +61,6 @@ class UserController extends Controller
                 $guru->user_id = User::where('email', $request->email)->first()->id;
                 $guru->save();
 
-
                 return redirect()->route('user.index')->with('success', 'Data user berhasil ditambahkan');
             } else {
                 return redirect()->route('user.index')->with('error', 'NIP tidak terdaftar sebagai guru');
@@ -107,6 +98,16 @@ class UserController extends Controller
             ]);
             return redirect()->route('user.index')->with('success', 'Data user berhasil ditambahkan');
         }
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        abort(404);
     }
 
     /**
