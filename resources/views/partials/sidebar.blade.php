@@ -46,6 +46,9 @@
                                                                                             href="{{ route('guru.dashboard') }}"><i
                             class="fas fa-columns"></i> <span>Dashboard</span></a></li>
                 <li class="menu-header">Master Data</li>
+                <li class="{{ request()->routeIs('absensi.*') ? 'active' : '' }}"><a class="nav-link"
+                                                                                     href="{{ route('absensi.index') }}"><i
+                            class="fas fa-user-check"></i> <span>Absensi</span></a></li>
                 <li class="{{ request()->routeIs('materi.*') ? 'active' : '' }}"><a class="nav-link"
                                                                                     href="{{ route('materi.index') }}"><i
                             class="fas fa-book"></i> <span>Materi</span></a></li>

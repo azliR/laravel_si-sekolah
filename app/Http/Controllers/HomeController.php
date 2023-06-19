@@ -10,7 +10,6 @@ use App\Models\Materi;
 use App\Models\Siswa;
 use App\Models\Tugas;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -53,6 +52,7 @@ class HomeController extends Controller
         $jadwal = Jadwal::where('mapel_id', $guru->mapel_id)->get();
         $tugas = Tugas::where('guru_id', $guru->id)->count();
         $hari = Carbon::now()->locale('id')->isoFormat('dddd');
+        $hari = strtolower($hari);
 
         return view('pages.guru.dashboard', compact('guru', 'materi', 'jadwal', 'hari', 'tugas'));
     }

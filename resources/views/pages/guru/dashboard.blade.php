@@ -17,7 +17,7 @@
                                 <i class="fas fa-book"></i>
                             </div>
                             <h4>Jadwal Mengajar</h4>
-                            <div class="card-description">Berikut list jadwal kelas tempat mengajaar anda</div>
+                            <div class="card-description">Berikut list jadwal kelas tempat mengajar anda</div>
                         </div>
                         <div class="card-body p-0">
                             <div class="tickets-list">
@@ -31,14 +31,15 @@
                                                 <div class="text-primary">Pada jam {{ $data->dari_jam }}</div>
                                             </div>
                                         </div>
-                                    @else
-                                        <div class="ticket-item">
-                                            <div class="ticket-title">
-                                                <h4>Tidak ada jadwal mengajar hari ini</h4>
-                                            </div>
-                                        </div>
                                     @endif
                                 @endforeach
+                                @if($jadwal->count() == 0)
+                                    <div class="ticket-item">
+                                        <div class="ticket-title">
+                                            <h4>Tidak ada jadwal mengajar hari ini</h4>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

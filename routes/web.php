@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JadwalController;
@@ -51,6 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => ['auth', 'checkRole:guru']], function () {
     Route::get('/guru/dashboard', [HomeController::class, 'guru'])->name('guru.dashboard');
+    Route::resource('absensi', AbsensiController::class);
+    Route::get('/absensi/jadwal/{id}', [AbsensiController::class, 'absensi'])->name('absensi.absensi');
     Route::resource('materi', MateriController::class);
     Route::resource('tugas', TugasController::class);
     Route::get('/jawaban-download/{id}', [TugasController::class, 'downloadJawaban'])->name('guru.jawaban.download');
