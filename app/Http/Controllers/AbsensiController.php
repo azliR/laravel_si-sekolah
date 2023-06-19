@@ -22,15 +22,19 @@ class AbsensiController extends Controller
     {
         $guru = Guru::where('user_id', Auth::user()->id)->first();
         $jadwal = Jadwal::where('mapel_id', $guru->mapel_id)->get();
-        return view('pages.guru.absensi.index', compact('jadwal'));
+
+        return view('pages.guru.absensi.index', compact('jadwal',));
     }
 
-    public function absensi($id_jadwal)
+    public function absensi($id_jadwal, $tanggal)
     {
         $jadwal = Jadwal::find($id_jadwal);
         $siswa = Siswa::where('kelas_id', $jadwal->kelas_id)->get();
         $kelas = Kelas::find($jadwal->kelas_id);
-        return view('pages.guru.absensi.absensi', compact('siswa', 'kelas', 'jadwal'));
+        $absensi = Absensi::where('jadwal_id', $id_jadwal)->where('tanggal', $tanggal)->get();
+        $all_absensi = Absensi::where('jadwal_id', $id_jadwal)->get();
+        $all_absensi = $all_absensi->unique('tanggal');
+        return view('pages.guru.absensi.absensi', compact('siswa', 'kelas', 'jadwal', 'absensi', 'all_absensi', 'tanggal'));
     }
 
     /**

@@ -51,9 +51,9 @@
                                             <td>{{ $data->sampai_jam }}</td>
                                             <td>
                                                 <div class="d-flex">
-                                                    <a href="{{ route('absensi.absensi', $data->kelas_id) }}"
-                                                       class="btn btn-primary btn-sm"><i
-                                                            class="nav-icon fas fa-marker"></i> &nbsp; Absensi</a>
+                                                    <a href="{{ route('absensi.absensi', [$data->id, date("dmY")]) }}"
+                                                       class="btn btn-primary btn-sm">
+                                                        <i class="nav-icon fas fa-marker"></i> &nbsp; Absensi</a>
                                                 </div>
                                             </td>
                                         </tr>

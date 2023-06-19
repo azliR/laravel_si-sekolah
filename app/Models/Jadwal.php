@@ -10,7 +10,7 @@ class Jadwal extends Model
     use HasFactory;
 
     protected $fillable = [
-        'mapel_id', 'kelas_id', 'hari', 'dari_jam', 'sampai_jam'
+        'mapel_id', 'kelas_id', 'hari', 'dari_jam', 'sampai_jam', 'tanggal_mulai'
     ];
 
     public function mapel()

@@ -22,15 +22,28 @@
                                     </div>
                                 </div>
                             @endif
+
                             <div class="form-group">
-                                <label for="sampai_jam">Tanggal</label>
-                                <input class="form-control" type="text" name="sampai_jam" id="time2"
-                                       @error('sampai_jam') is-invalid @enderror"
-                                placeholder="{{ __('Nama Jurusan') }}" value="{{ $jadwal->sampai_jam ?? '' }}" />
+                                <label for="kelas_id">Lihat absensi sebelumnya</label>
+                                <select id="kelas_id" name="kelas_id"
+                                        class="select2 form-control @error('kelas_id') is-invalid @enderror">
+                                    <option value="">-- Pilih tanggal --</option>
+                                    @foreach ($all_absensi as $data )
+                                        <option value="{{ $data->id }}">{{ $data->tanggal }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <button class="btn btn-primary">
-                                <i class="nav-icon fas fa-save"></i>&nbsp; Simpan Absensi
-                            </button>
+                            @if($tanggal == date("dmY"))
+                                <div class="form-group">
+                                    <label for="tanggal">Tanggal</label>
+                                    <input class="form-control" type="date" name="tanggal" id="tanggal"/>
+                                </div>
+                            @endif
+                            <div class="d-flex">
+                                <a class="btn btn-primary" href="">
+                                    <i class="nav-icon fas fa-save"></i>&nbsp; Simpan Absensi
+                                </a>
+                            </div>
                             <br><br>
                             <div class="table-responsive">
                                 <table class="table table-striped" id="table-2">
@@ -53,22 +66,23 @@
                                             <td>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="keterangan"
-                                                           id="hadir" value="hadir">
-                                                    <label class="form-check-label" for="hadir">
+                                                           id="{{$data->id}}_hadir"
+                                                           value="hadir" {{ count($absensi->where('id', $data->id))==0 ? "" : "checked" }}>
+                                                    <label class="form-check-label" for="{{$data->id}}_hadir">
                                                         Hadir
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="keterangan"
-                                                           id="izin" value="izin">
-                                                    <label class="form-check-label" for="izin">
+                                                           id="{{$data->id}}_izin" value="izin">
+                                                    <label class="form-check-label" for="{{$data->id}}_izin">
                                                         Izin
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="keterangan"
-                                                           id="alfa" value="alfa">
-                                                    <label class="form-check-label" for="alfa">
+                                                           id="{{$data->id}}_alfa" value="alfa">
+                                                    <label class="form-check-label" for="{{$data->id}}_alfa">
                                                         Alfa
                                                     </label>
                                                 </div>
@@ -88,9 +102,6 @@
 
 @push('script')
     <script>
-        $('#time1').datepicker({
-            format: 'dd-mm-yyyy',
-        });
-
+        document.getElementById('tanggal').valueAsDate = new Date();
     </script>
 @endpush
