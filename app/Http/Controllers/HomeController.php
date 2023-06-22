@@ -6,9 +6,7 @@ use App\Models\Guru;
 use App\Models\Jadwal;
 use App\Models\Kelas;
 use App\Models\Mapel;
-use App\Models\Materi;
 use App\Models\Siswa;
-use App\Models\Tugas;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,23 +46,20 @@ class HomeController extends Controller
     public function guru()
     {
         $guru = Guru::where('user_id', Auth::user()->id)->first();
-        $materi = Materi::where('guru_id', $guru->id)->count();
         $jadwal = Jadwal::where('mapel_id', $guru->mapel_id)->get();
-        $tugas = Tugas::where('guru_id', $guru->id)->count();
+        $kelas_wali = Kelas::where('guru_id', $guru->id)->first();
         $hari = Carbon::now()->locale('id')->isoFormat('dddd');
         $hari = strtolower($hari);
 
-        return view('pages.guru.dashboard', compact('guru', 'materi', 'jadwal', 'hari', 'tugas'));
+        return view('pages.guru.dashboard', compact('guru', 'jadwal', 'hari', 'kelas_wali'));
     }
 
     public function siswa()
     {
         $siswa = Siswa::where('nis', Auth::user()->nis)->first();
         $kelas = Kelas::findOrFail($siswa->kelas_id);
-        $materi = Materi::where('kelas_id', $kelas->id)->limit(3)->get();
-        $tugas = Tugas::where('kelas_id', $kelas->id)->limit(3)->get();
         $jadwal = Jadwal::where('kelas_id', $kelas->id)->get();
         $hari = Carbon::now()->locale('id')->isoFormat('dddd');
-        return view('pages.siswa.dashboard', compact('materi', 'siswa', 'kelas', 'tugas', 'jadwal', 'hari'));
+        return view('pages.siswa.dashboard', compact('siswa', 'kelas', 'jadwal', 'hari'));
     }
 }

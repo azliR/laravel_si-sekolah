@@ -117,7 +117,6 @@
                                                     <option value="">-- Pilih Roles --</option>
                                                     <option value="admin">Admin</option>
                                                     <option value="guru">Guru</option>
-                                                    <option value="siswa">Siswa</option>
                                                 </select>
                                             </div>
                                             <div class="form-group" id="noId"></div>

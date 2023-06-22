@@ -48,7 +48,7 @@ class GuruController extends Controller
             'no_telp' => 'required',
             'alamat' => 'required',
             'mapel_id' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
             'nip.unique' => 'NIP sudah terdaftar',
         ]);

@@ -52,10 +52,10 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Jumlah Materi Diajarkan</h4>
+                                <h4>Jumlah Jadwal</h4>
                             </div>
                             <div class="card-body">
-                                {{ $materi }}
+                                {{ $jadwal->count() }}
                             </div>
                         </div>
                     </div>
@@ -67,10 +67,10 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Jumlah Tugas diberikan</h4>
+                                <h4>Anda wali kelas dari</h4>
                             </div>
                             <div class="card-body">
-                                {{ $tugas }}
+                                {{ $kelas_wali->nama_kelas }}
                             </div>
                         </div>
                     </div>

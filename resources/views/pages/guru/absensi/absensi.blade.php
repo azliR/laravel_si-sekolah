@@ -39,59 +39,65 @@
                                     <input class="form-control" type="date" name="tanggal" id="tanggal"/>
                                 </div>
                             @endif
-                            <div class="d-flex">
-                                <a class="btn btn-primary" href="">
-                                    <i class="nav-icon fas fa-save"></i>&nbsp; Simpan Absensi
-                                </a>
-                            </div>
-                            <br><br>
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="table-2">
-                                    <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Siswa</th>
-                                        <th>NIS</th>
-                                        <th>Kelas</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach ($siswa as $result => $data)
+                            <form action="{{ route('absensi.store',$jadwal->id, $tanggal) }}"
+                                  method="POST">
+                                <button type="submit" class="btn btn-primary"><i class="nav-icon fas fa-save"></i>&nbsp;
+                                    Simpan absensi
+                                </button>
+                                <input type="hidden" name="jadwal_id" value="{{ $jadwal->id }}">
+                                <br><br>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="table-2">
+                                        <thead>
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $data->nama }}</td>
-                                            <td>{{ $data->nis }}</td>
-                                            <td>{{ $data->kelas->nama_kelas }}</td>
-                                            <td>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="keterangan"
-                                                           id="{{$data->id}}_hadir"
-                                                           value="hadir" {{ count($absensi->where('id', $data->id))==0 ? "" : "checked" }}>
-                                                    <label class="form-check-label" for="{{$data->id}}_hadir">
-                                                        Hadir
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="keterangan"
-                                                           id="{{$data->id}}_izin" value="izin">
-                                                    <label class="form-check-label" for="{{$data->id}}_izin">
-                                                        Izin
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="keterangan"
-                                                           id="{{$data->id}}_alfa" value="alfa">
-                                                    <label class="form-check-label" for="{{$data->id}}_alfa">
-                                                        Alfa
-                                                    </label>
-                                                </div>
-                                            </td>
+                                            <th>No</th>
+                                            <th>Nama Siswa</th>
+                                            <th>NIS</th>
+                                            <th>Kelas</th>
+                                            <th>Aksi</th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($siswa as $result => $data)
+                                            <input type="hidden" name="{{$data->id}}_siswa" value="{{ $data }}">
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $data->nama }}</td>
+                                                <td>{{ $data->nis }}</td>
+                                                <td>{{ $data->kelas->nama_kelas }}</td>
+                                                <td>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="{{$data->id}}_keterangan"
+                                                               id="{{$data->id}}_hadir"
+                                                               value="hadir" {{ count($absensi->where('id', $data->id))==0 ? "" : "checked" }}>
+                                                        <label class="form-check-label" for="{{$data->id}}_hadir">
+                                                            Hadir
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="{{$data->id}}_keterangan"
+                                                               id="{{$data->id}}_izin" value="izin">
+                                                        <label class="form-check-label" for="{{$data->id}}_izin">
+                                                            Izin
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="{{$data->id}}_keterangan"
+                                                               id="{{$data->id}}_alfa" value="alfa">
+                                                        <label class="form-check-label" for="{{$data->id}}_alfa">
+                                                            Alfa
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

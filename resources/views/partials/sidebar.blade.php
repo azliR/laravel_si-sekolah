@@ -15,7 +15,7 @@
 
                 <li class="{{ request()->routeIs('jurusan.*') ? 'active' : '' }}"><a class="nav-link"
                                                                                      href="{{ route('jurusan.index') }}"><i
-                            class="fas fa-book"></i> <span>Jurusan</span></a></li>
+                            class="fas fa-school"></i> <span>Jurusan</span></a></li>
 
                 <li class="{{ request()->routeIs('mapel.*') ? 'active' : '' }}"><a class="nav-link"
                                                                                    href="{{ route('mapel.index') }}"><i
@@ -49,23 +49,11 @@
                 <li class="{{ request()->routeIs('absensi.*') ? 'active' : '' }}"><a class="nav-link"
                                                                                      href="{{ route('absensi.index') }}"><i
                             class="fas fa-user-check"></i> <span>Absensi</span></a></li>
-                <li class="{{ request()->routeIs('materi.*') ? 'active' : '' }}"><a class="nav-link"
-                                                                                    href="{{ route('materi.index') }}"><i
-                            class="fas fa-book"></i> <span>Materi</span></a></li>
-                <li class="{{ request()->routeIs('tugas.*') ? 'active' : '' }}"><a class="nav-link"
-                                                                                   href="{{ route('tugas.index') }}"><i
-                            class="fas fa-list"></i> <span>Tugas</span></a></li>
 
             @elseif (Auth::check() && Auth::user()->roles == 'siswa')
                 <li class="{{ request()->routeIs('siswa.dashboard.*') ? 'active' : '' }}"><a class="nav-link"
                                                                                              href="{{ route('siswa.dashboard') }}"><i
                             class="fas fa-columns"></i> <span>Dashboard</span></a></li>
-                <li class="{{ request()->routeIs('materi.*') ? 'active' : '' }}"><a class="nav-link"
-                                                                                    href="{{ route('siswa.materi') }}"><i
-                            class="fas fa-book"></i> <span>Materi</span></a></li>
-                <li class="{{ request()->routeIs('tugas.*') ? 'active' : '' }}"><a class="nav-link"
-                                                                                   href="{{ route('siswa.tugas') }}"><i
-                            class="fas fa-list"></i> <span>Tugas</span></a></li>
 
             @endif
 

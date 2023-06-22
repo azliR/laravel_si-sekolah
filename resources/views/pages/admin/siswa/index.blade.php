@@ -10,7 +10,7 @@
                         <div class="card-header d-flex justify-content-between">
                             <h4>List Siswa</h4>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i
-                                    class="nav-icon fas fa-folder-plus"></i>&nbsp; Tambah Data Guru
+                                    class="nav-icon fas fa-folder-plus"></i>&nbsp; Tambah Data Siswa
                             </button>
                         </div>
                         <div class="card-body">

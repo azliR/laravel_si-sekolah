@@ -26,8 +26,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // check role and redirect
-
     if (Auth::check()) {
         if (Auth::user()->roles == 'admin') {
             return redirect()->route('admin.dashboard');
@@ -54,17 +52,9 @@ Route::group(['middleware' => ['auth', 'checkRole:guru']], function () {
     Route::get('/guru/dashboard', [HomeController::class, 'guru'])->name('guru.dashboard');
     Route::resource('absensi', AbsensiController::class);
     Route::get('/absensi/jadwal/{id_jadwal}/{tanggal}', [AbsensiController::class, 'absensi'])->name('absensi.absensi');
-    Route::resource('materi', MateriController::class);
-    Route::resource('tugas', TugasController::class);
-    Route::get('/jawaban-download/{id}', [TugasController::class, 'downloadJawaban'])->name('guru.jawaban.download');
 });
 Route::group(['middleware' => ['auth', 'checkRole:siswa']], function () {
     Route::get('/siswa/dashboard', [HomeController::class, 'siswa'])->name('siswa.dashboard');
-    Route::get('/siswa/materi', [MateriController::class, 'siswa'])->name('siswa.materi');
-    Route::get('/materi-download/{id}', [MateriController::class, 'download'])->name('siswa.materi.download');
-    Route::get('/siswa/tugas', [TugasController::class, 'siswa'])->name('siswa.tugas');
-    Route::get('/tugas-download/{id}', [TugasController::class, 'download'])->name('siswa.tugas.download');
-    Route::post('/kirim-jawaban', [TugasController::class, 'kirimJawaban'])->name('kirim-jawaban');
 });
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
     Route::get('/admin/dashboard', [HomeController::class, 'admin'])->name('admin.dashboard');

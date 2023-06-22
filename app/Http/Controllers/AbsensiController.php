@@ -46,25 +46,44 @@ class AbsensiController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        dd($data);
+        for ($i = 0; $i < count($siswa); $i++) {
+            // data is ${siswa_id}_keterangan
+            $data = explode('_', $data[$i]);
 
-        // 'id', 'jadwal_id', 'siswa_id', 'keterangan', 'tanggal', 'created_at', 'updated'
-        $this->validate($request, [
-            'jadwal_id' => 'required',
-            'siswa_id' => 'required',
-            'keterangan' => 'required',
-            'tanggal' => 'required',
-        ], [
-        ]);
-
-        Absensi::create([
-            'kelas_id' => $data['kelas_id'],
-            'mapel_id' => $data['mapel_id'],
-            'hari' => $data['hari'],
-            'dari_jam' => $data['dari_jam'],
-            'sampai_jam' => $data['sampai_jam'],
-        ]);
+            $absensi = Absensi::where('jadwal_id', $jadwal->id)->where('tanggal', $tanggal)->where('siswa_id', $siswa[$i])->first();
+            if ($absensi) {
+                $absensi->update([
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            } else {
+                Absensi::create([
+                    'jadwal_id' => $jadwal->id,
+                    'siswa_id' => $siswa[$i],
+                    'tanggal' => $tanggal,
+                    'keterangan' => $request->keterangan[$i],
+                ]);
+            }
+        }
 
         return redirect()->back()->with('success', 'Absensi berhasil dibuat');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+
+        $absensi = Absensi::findOrFail($id);
+        $absensi->update($data);
+
+        return redirect()->route('absensi.index')->with('success', 'Absensi berhasil diperbaharui');
     }
 
     /**
@@ -103,23 +122,6 @@ class AbsensiController extends Controller
         $hari = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
 
         return view('pages.admin.absensi.edit', compact('absensi', 'mapel', 'kelas', 'hari'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $data = $request->all();
-
-        $absensi = Absensi::findOrFail($id);
-        $absensi->update($data);
-
-        return redirect()->route('absensi.index')->with('success', 'Absensi berhasil diperbaharui');
     }
 
     /**
